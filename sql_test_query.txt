@@ -1,0 +1,54 @@
+SELECT jobs.id,jobs.name,`media_id`,`job_category_id`,`job_type_id`,`description`,`detail`,`business_skill`,`knowledge`,`location`,`activity`,`academic_degree_doctor`,`academic_degree_master`,`academic_degree_professional`,`academic_degree_bachelor`,`salary_statistic_group`,`salary_range_first_year`,`salary_range_average`,`salary_range_remarks`,`restriction`,`estimated_total_workers`,`remarks`,`url`,`seo_description`,`seo_keywords`,`sort_order`,`publish_status`,`version`,jobs.created_by,jobs.created,jobs.modified,jobs.deleted,`JobCategories_id`,`JobCategories_name`,`JobCategories_sort_order`,`JobCategories_created_by`,`JobCategories_created`,`JobCategories_modified`,`JobCategories_deleted`,`JobTypes_id`,`JobTypes_name`,`JobTypes_job_category_id`,`JobTypes_sort_order`,`JobTypes_created_by`,`JobTypes_created`,`JobTypes_modified`,`JobTypes_deleted`
+FROM `jobs`
+LEFT JOIN `jobs_personalities` ON jobs.id = jobs_personalities.id
+LEFT JOIN `personalities` ON personalities.id = jobs_personalities.id
+LEFT JOIN `jobs_practical_skills` ON jobs_practical_skills.id = jobs.id
+LEFT JOIN `practical_skills` on practical_skills.id = jobs_practical_skills.id
+LEFT JOIN `jobs_basic_abilities` ON jobs_basic_abilities.id = jobs.id
+LEFT JOIN `basic_abilities` ON basic_abilities.id = jobs_basic_abilities.id
+LEFT JOIN `jobs_tools` ON jobs_tools.id = jobs.id
+LEFT JOIN `affiliates_tools` ON affiliates_tools.id = jobs_tools.affiliate_id
+LEFT JOIN `jobs_career_paths` ON jobs_career_paths.id = jobs.id
+LEFT JOIN `affiliates_career_paths` ON affiliates_career_paths.id = jobs_career_paths.affiliate_id
+LEFT JOIN `jobs_rec_qualifications` ON jobs_rec_qualifications.id = jobs.id
+LEFT JOIN `affiliates_rec_qualifications` ON affiliates_rec_qualifications.id = jobs_rec_qualifications.affiliate_id
+LEFT JOIN `jobs_req_qualifications` ON jobs_req_qualifications.id = jobs.id
+LEFT JOIN `affiliates_req_qualifications` ON affiliates_req_qualifications.id = jobs_req_qualifications.affiliate_id
+INNER JOIN `job_categories` on job_categories.id = `job_category_id`
+INNER JOIN `job_types` on job_types.id = `job_type_id`
+WHERE (jobs.JobCategories_name LIKE '%キャビンアテンダント%'
+      OR jobs.JobTypes_name LIKE '%キャビンアテンダント%'
+      OR jobs.name LIKE '%キャビンアテンダント%'
+      OR jobs.description LIKE '%キャビンアテンダント%'
+      OR jobs.detail LIKE '%キャビンアテンダント%'
+      OR jobs.business_skill LIKE '%キャビンアテンダント%'
+      OR jobs.knowledge LIKE '%キャビンアテンダント%'
+      OR jobs.location LIKE '%キャビンアテンダント%'
+      OR jobs.activity LIKE '%キャビンアテンダント%'
+      OR jobs.salary_statistic_group LIKE '%キャビンアテンダント%'
+      OR jobs.salary_range_remarks LIKE '%キャビンアテンダント%'
+      OR jobs.restriction LIKE '%キャビンアテンダント%'
+      OR jobs.remarks LIKE '%キャビンアテンダント%'
+      OR personalities.name LIKE '%キャビンアテンダント%'
+      OR practical_skills.name LIKE '%キャビンアテンダント%'
+      OR basic_abilities.name LIKE '%キャビンアテンダント%'
+      OR jobs_tools.name LIKE '%キャビンアテンダント%'
+      OR jobs_career_paths.name LIKE '%キャビンアテンダント%'
+      OR jobs_rec_qualifications.name LIKE '%キャビンアテンダント%'
+      OR jobs_req_qualifications.name LIKE '%キャビンアテンダント%')
+AND `publish_status` = 1
+AND jobs.deleted IS NULL
+AND personalities.deleted IS NULL
+AND job_categories.deleted IS NULL
+AND job_types.deleted IS NULL
+AND practical_skills.deleted IS NULL
+AND basic_abilities.deleted IS NULL
+AND affiliates_tools.type = 1
+AND affiliates_tools.deleted IS NULL
+AND affiliates_career_paths.type = 3
+AND affiliates_career_paths.deleted IS NULL
+AND affiliates_rec_qualifications.type = 2
+AND affiliates_rec_qualifications.deleted IS NULL
+AND affiliates_req_qualifications.type = 2
+AND affiliates_req_qualifications.deleted IS NULL
+GROUP BY jobs.id ORDER BY jobs.sort_order,jobs.id LIMIT 50 OFFSET 0
