@@ -13,4 +13,4 @@ Files:
 
 Total time spent:
 =================
-1.5 hours
+1.3 hours
