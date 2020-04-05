@@ -8,7 +8,7 @@ Improvements:
 
 Files:
 ======
-1. MySQL SQL database backup: sql_test.sql with tables and views
+1. MySQL SQL database backup: sql_test.sql (tables & views)
 2. SQL saved in plain text: sql_test_query.txt
 
 Total time spent:
